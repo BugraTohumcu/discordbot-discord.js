@@ -19,6 +19,7 @@ module.exports = {
                 adapterCreator:interaction.guild.voiceAdapterCreator
             });
             await interaction.reply({ content: 'Connected to ' + voiceChannel.name, ephemeral: true });
+            
         }
 
 }

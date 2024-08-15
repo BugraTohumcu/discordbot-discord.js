@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js') ;
+const { SlashCommandBuilder, Guild } = require('discord.js') ;
 const { joinVoiceChannel ,getVoiceConnection } =  require('@discordjs/voice');
 
 module.exports = {
@@ -6,7 +6,14 @@ module.exports = {
         .setName('disconnect')
         .setDescription('Disconnect from voice channel'),
         async execute(interaction){
-                const connection = getVoiceConnection();
-                console.log(connection);            
+                const connection = joinVoiceChannel({
+                        channelId: interaction.channelId,
+                        guildId: interaction.guildId,
+                        adapterCreator:interaction.guild.voiceAdapterCreator
+                    });
+
+                    connection.destroy();
+                    await interaction.reply({ content: 'Disconnected from', ephemeral: true });
+                
         }
 }
